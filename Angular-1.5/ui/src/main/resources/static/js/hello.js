@@ -1,18 +1,17 @@
-angular.module('hello', ['ngRoute'])
+angular.module('hello', [ 'ngRoute' ])
 	.config(function($routeProvider, $httpProvider) {
-		
 		$routeProvider.when('/', {
-			templateUrl: 'home.html',
-			controller: 'home', 
+			templateUrl : 'home.html',
+			controller : 'home',
 			controllerAs: 'controller'
 		}).when('/login', {
-			templateUrl: 'login.html',
-			controller: 'navigation',
+			templateUrl : 'login.html',
+			controller : 'navigation',
 			controllerAs: 'controller'
 		}).otherwise('/');
-		
-		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-		
+	
+		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+	
 	})
 	.controller('home', function($http) {
 		var self = this;
@@ -20,22 +19,22 @@ angular.module('hello', ['ngRoute'])
 			self.greeting = response.data;
 		})
 	})
-	.controller('navigation', function($rootscope, $http, $location) {
+	.controller('navigation', function($rootScope, $http, $location) {
 		var self = this;
 		var authenticate = function(credentials, callback) {
-			var headers = credentials ? {authorization: "Basic" 
+			var headers = credentials ? {authorization: "Basic " 
 				+ btoa(credentials.username + ":" + credentials.password)
 			} : {};
 		
 			$http.get('user', {headers: headers}).then(function(response) {
 				if(response.data.name) {
-					$rootscope.authenticated = true;
+					$rootScope.authenticated = true;
 				} else {
-					$rootscope.authenticated = false;
+					$rootScope.authenticated = false;
 				}
 				callback && callback();
 			}, function() {
-				$rootscope.authenticated = false;
+				$rootScope.authenticated = false;
 				callback && callback();
 			});
 		}
@@ -44,7 +43,7 @@ angular.module('hello', ['ngRoute'])
 		self.credentials = {};
 		self.login = function() {
 			authenticate(self.credentials, function() {
-				if($rootscope.authenticated) {
+				if($rootScope.authenticated) {
 					$location.path("/");
 					self.error = false;
 				} else {
@@ -53,26 +52,12 @@ angular.module('hello', ['ngRoute'])
 				}
 			});
 		};
+		
+		self.logout = function() {
+			$http.post('logout', {}).finally(function() {
+				$rootScope.authenticated = false;
+				$location.path("/");
+			});
+		}
 	});
 		
-	self.logout = function() {
-		$http.post('logout', {}).finally(function() {
-			$rootscope.authenticated = false;
-			$location.path("/");
-		});
-	}
-		
-/*part 1*/
-/*angular.module('hello', [])
-	.controller('home', function($http) {
-		var self = this;
-		$http.get('/resource/').then(function(response) {
-			self.greeting = response.data;
-		})*/
-		
-		/*part 0*/
-		/*.greeting = {
-			id : 'xxx',
-			content : 'Hello World!'
-		}
-	});*/
