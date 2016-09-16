@@ -1,0 +1,35 @@
+BASE
+http://petstore.swagger.io/#/pet
+For this sample, you can use the api key special-key to test the authorization filters.
+
+
+
+GET http://petstore.swagger.io/v2/pet/findByStatus?status=available|pending|sold
+POSTed pet id 654
+GET http://petstore.swagger.io/v2/pet/654
+POST http://petstore.swagger.io/v2/pet/654?status=sold  --header 'Content-Type: application/x-www-form-urlencoded'
+PUT http://petstore.swagger.io/v2/pet
+{
+  "id": 654,
+  "category": {
+    "id": 213,
+    "name": "allYourCategoriesAreBelongToUs"
+  },
+  "name": "mutley",
+  "photoUrls": [
+    "https://www.google.com/imgres?imgurl=http%3A%2F%2Fr.ddmcdn.com%2Fs_f%2Fo_1%2Fcx_633%2Fcy_0%2Fcw_1725%2Fch_1725%2Fw_720%2FAPL%2Fuploads%2F2014%2F11%2Ftoo-cute-doggone-it-video-playlist.jpg&imgrefurl=http%3A%2F%2Fwww.animalplanet.com%2Fpets%2Fdogs%2F&docid=Drfp9n-SwnJboM&tbnid=UsfehCYVXdb2gM%3A&w=720&h=720&bih=892&biw=1666&ved=0ahUKEwj18aTc0_vOAhXBXR4KHRBPBR8QMwgzKAAwAA&iact=mrc&uact=8"
+  ],
+  "tags": [
+    {
+      "id": 64,
+      "name": "izzaTag"
+    }
+  ],
+  "status": "available"
+}
+
+
+
+
+GET http://petstore.swagger.io/v2/store/inventory
+GET http://petstore.swagger.io/v2/store/order/44
